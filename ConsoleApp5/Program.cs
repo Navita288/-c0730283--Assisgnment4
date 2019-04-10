@@ -11,62 +11,65 @@ namespace ConsoleApp5
     class Program
     {
         ArrayList Beowulf;
-        int counterletters = 0;
-        int countSpaces = 0;
+        int LineCount = 0;
         static void Main(string[] args)
+
         {
             Program p = new Program();
             p.Beowulf = new ArrayList();
-            p.Run();
+            p.ReadTextFiles();
+
         }
         public void Run() { this.ReadTextFiles(); }
         public void ReadTextFiles()
         {
-            // Read file using StreamReader.reads file line by line
-            using (StreamReader sr  = new StreamReader("U:/Users/730283/Downloads/Beowulf.txt"))
+            using (StreamReader file = new StreamReader("U:/Users/730283/Downloads/Beowulf.txt"))
+
             {
-                string line;
                 int counter = 0;
-                int a = 0, myWord = 1;
 
-                while ((line = sr.ReadLine()) != null)
+                int number = 0;
+
+                string line;
+
+                while ((line = file.ReadLine()) != null)
+
                 {
-                    Console.WriteLine(line);
-                    Beowulf.Add(line);
-                    FindNumberOfBlankSpaces(line);
-                    counter++;
 
-                    while (a <= line.Length - 1)
+                    if (line.Contains("Sea") && line.Contains("Fare") || line.Contains("sea") && line.Contains("fare"))
+
                     {
-                        if (line[a] == ' ' || line[a] == '\n' || line[a] == '\t')
-                        {
-                            myWord++;
-                        }
-                        a++;
+
+                        int x = counter - 1;
+
+                        number++;
+
                     }
-                    a = 0;
+
+                    counter++;
 
                 }
 
+                Console.WriteLine($"The number of lines that contains *Sea* and *Fare* are {number}");
 
-                Console.WriteLine("\n\n\n\n********************************The number of lines in the paragraph is " + counter);
-                Console.WriteLine("The number of words in paragraph is " + myWord);
-                Console.ReadLine();
+                file.Close();
+
             }
 
         }
+
+
         public int FindNumberOfBlankSpaces(string line)
         {
-
-
+            int countletters = 0;
+            int countSpaces = 0;
             foreach (char c in line)
             {
-                if (char.IsLetter(c)) { counterletters++; }
+                if (char.IsLetter(c)) { countletters++; }
                 if (char.IsWhiteSpace(c)) { countSpaces++; }
             }
             return countSpaces;
+
         }
     }
 }
-
-
