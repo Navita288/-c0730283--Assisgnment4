@@ -11,7 +11,8 @@ namespace ConsoleApp5
     class Program
     {
         ArrayList Beowulf;
-        int LineCount = 0;
+        int counterletters = 0;
+        int countSpaces = 0;
         static void Main(string[] args)
 
         {
@@ -23,53 +24,50 @@ namespace ConsoleApp5
         public void Run() { this.ReadTextFiles(); }
         public void ReadTextFiles()
         {
-            using (StreamReader file = new StreamReader("U:/Users/730283/Downloads/Beowulf.txt"))
+            using (StreamReader sr = new StreamReader("U:/Users/730283/Downloads/Beowulf.txt"))
 
             {
-                int counter = 0;
-
-                int number = 0;
-
                 string line;
+                int counter = 0;
+                int a = 0, myWord = 1;
+                int averageLetterPerWord;
 
-                while ((line = file.ReadLine()) != null)
-
+                while ((line = sr.ReadLine()) != null)
                 {
-
-                    if (line.Contains("Sea") && line.Contains("Fare") || line.Contains("sea") && line.Contains("fare"))
-
-                    {
-
-                        int x = counter - 1;
-
-                        number++;
-
-                    }
-
+                    Console.WriteLine(line);
+                    Beowulf.Add(line);
+                    FindNumberOfBlankSpaces(line);
                     counter++;
+
+                    while (a <= line.Length - 1)
+                    {
+                        if (line[a] == ' ' || line[a] == '\n' || line[a] == '\t')
+                        {
+                            myWord++;
+                        }
+                        a++;
+                    }
+                    a = 0;
 
                 }
 
-                Console.WriteLine($"The number of lines that contains *Sea* and *Fare* are {number}");
+                averageLetterPerWord = counterletters / countSpaces;
 
-                file.Close();
-
+                Console.WriteLine("\n\n\n\n********************************\nThe number of lines in the paragraph is " + counter);
+                Console.WriteLine("The number of words in paragraph is " + myWord);
+                Console.WriteLine("The number of average letters per word is  " + averageLetterPerWord);
+                Console.ReadLine();
             }
 
         }
-
-
         public int FindNumberOfBlankSpaces(string line)
         {
-            int countletters = 0;
-            int countSpaces = 0;
             foreach (char c in line)
             {
-                if (char.IsLetter(c)) { countletters++; }
+                if (char.IsLetter(c)) { counterletters++; }
                 if (char.IsWhiteSpace(c)) { countSpaces++; }
             }
             return countSpaces;
-
         }
     }
 }
